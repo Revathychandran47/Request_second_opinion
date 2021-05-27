@@ -19,3 +19,12 @@ Scenario: Validate that user should be able to view the bar with Upload Scans as
 Scenario: Validate that the user should be able to upload scans by clicking on Upload my scans button
     Then User should be able to upload folder from the system
    
+Scenario: Validate that the user should be able to upload reports by clicking on Upload my reports button
+    Then User should be able to upload file from the system
+
+Scenario: Validate that the user should be able to view the dialogue box when I do not have a doctor's report checkbox
+    Then User should be able to view the Upload scans page
+    
+Scenario: Validate that the user should navigated to Upload Scans page by checking Other check box and by entering details
+    Then User should be navigated to upload scans page
+   
