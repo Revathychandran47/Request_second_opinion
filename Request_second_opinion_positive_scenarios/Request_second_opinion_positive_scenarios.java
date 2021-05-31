@@ -1,8 +1,7 @@
 package Request_second_opinion_positive_scenarios;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import Reusable_Functions.Generic_function;
 import io.cucumber.java.en.Then;
@@ -10,8 +9,8 @@ import io.cucumber.java.en.When;
 
 public class Request_second_opinion_positive_scenarios extends Generic_function {
 	static boolean value;
-	static int b;
-	static String text;
+	static String text,month,year,monthval,yearval,te;
+	static WebElement fr,fr1,element,ele;
 
 	/*Browser opens and user is on home page*/ 	
 	@When("User is on home page")
@@ -39,9 +38,7 @@ public class Request_second_opinion_positive_scenarios extends Generic_function 
 			click("create_new_case");
 			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "request_second_opinion"))).isDisplayed();
 			Assert.assertEquals(true,value);
-			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "request_second_opinion"))).isDisplayed();
-			Assert.assertEquals(true,value);
- 	}catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 			takeScreenShot("request_second_opinion_positive_tc_001");
 		}	
@@ -94,10 +91,11 @@ public class Request_second_opinion_positive_scenarios extends Generic_function 
 			browser_wait(10);
 			click("proceed_button");
 			Thread.sleep(8000);
+			fr= driver.findElement(By.xpath(OR_reader("Object_Locator","outer_frame")));
+			driver.switchTo().frame(fr);
 			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "upload_scans_page_title"))).isDisplayed();
 			Assert.assertEquals(true,value);
 			browser_wait(30);
-			System.out.println("pass4");
 		}catch (Exception e) {
 			e.printStackTrace();
 			takeScreenShot("request_second_opinion_positive_tc_004");
@@ -108,13 +106,16 @@ public class Request_second_opinion_positive_scenarios extends Generic_function 
 	@Then("User should be able to view the bar and links")
 	public static void request_second_opinion_positive_tc_005() throws Exception {
 		try {
-			//browser_wait(160);
-			Thread.sleep(6000);
-			Actions act = new Actions(driver);
-			act.sendKeys(Keys.TAB).build().perform();
-			act.sendKeys(Keys.ENTER).build().perform();
-			browser_wait(20);
-			System.out.println("pass5");
+			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "upload_scans_page_title"))).isDisplayed();
+			Assert.assertEquals(true,value);
+			click_javascript("how_do_upload_link");
+			browser_wait(30);
+			click_javascript("close_button");
+			browser_wait(30);
+			click_javascript("don’t_have_scans_link");
+			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "don’t_have_scans_ok"))).isDisplayed();
+			Assert.assertEquals(true,value);
+			click_javascript("don’t_have_scans_ok");
 		}catch (Exception e) {
 			e.printStackTrace();
 			takeScreenShot("request_second_opinion_positive_tc_005");
@@ -125,14 +126,20 @@ public class Request_second_opinion_positive_scenarios extends Generic_function 
 	@Then("User should be able to upload folder from the system")
 	public static void request_second_opinion_positive_tc_006() throws Exception {
 		try {
-			Actions act = new Actions(driver);
-			act.sendKeys(Keys.TAB).build().perform();
-			act.sendKeys(Keys.ENTER).build().perform();
-			browser_wait(60);
-			//value = driver.findElement(By.xpath(OR_reader("Object_Locator", "choose_file_button"))).isDisplayed();
-			//Assert.assertEquals(true,value);
-			//click("choose_file_button");
-			System.out.println("pass6");
+			click_javascript("upload_scans_button");
+			Thread.sleep(4000);
+			fr1= driver.findElement(By.xpath(OR_reader("Object_Locator","inner_frame")));
+			driver.switchTo().frame(fr1);
+			Thread.sleep(2000);
+			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "choose_file_title"))).isDisplayed();
+			Assert.assertEquals(true,value);
+			browser_wait(20);
+			driver.findElement(By.xpath(OR_reader("Object_Locator", "choose_file_button"))).sendKeys(td_reader("scans"));
+			browser_wait(20);
+			driver.switchTo().defaultContent();
+			fr= driver.findElement(By.xpath(OR_reader("Object_Locator","outer_frame")));
+			driver.switchTo().frame(fr);
+			click_javascript("upload_scan_close_button");
 		}catch (Exception e) {
 			e.printStackTrace();
 			takeScreenShot("request_second_opinion_positive_tc_006");
@@ -143,7 +150,12 @@ public class Request_second_opinion_positive_scenarios extends Generic_function 
 	@Then("User should be able to upload file from the system")
 	public static void request_second_opinion_positive_tc_007() throws Exception {
 		try {
-			System.out.println("pass7");
+			browser_wait(30);
+			driver.findElement(By.xpath(OR_reader("Object_Locator", "upload_report_button"))).sendKeys(td_reader("report"));
+			Thread.sleep(3000);
+			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "uploaded_report"))).isDisplayed();
+			Assert.assertEquals(true,value);
+			browser_wait(5);
 		}catch (Exception e) {
 			e.printStackTrace();
 			takeScreenShot("request_second_opinion_positive_tc_007");
@@ -154,7 +166,16 @@ public class Request_second_opinion_positive_scenarios extends Generic_function 
 	@Then("User should be able to view the Upload scans page")
 	public static void request_second_opinion_positive_tc_008() throws Exception {
 		try {
-			System.out.println("pass8");
+			browser_wait(20);
+			click_javascript("don’t_have_doctors_checkbox");
+			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "upload_report"))).isDisplayed();
+			Assert.assertEquals(true,value);
+			click_javascript("upload_report");
+			click_javascript("don’t_have_doctors_checkbox");
+			click_javascript("don’t_have_doctors_checkbox");
+			click_javascript("i_dont_have_it");
+			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "don’t_have_doctors_checkbox"))).isDisplayed();
+			Assert.assertEquals(true,value);
 		}catch (Exception e) {
 			e.printStackTrace();
 			takeScreenShot("request_second_opinion_positive_tc_008");
@@ -171,10 +192,21 @@ public class Request_second_opinion_positive_scenarios extends Generic_function 
 			browser_wait(2);
 			driver.findElement(By.xpath(OR_reader("Object_Locator", "patient_first_name"))).sendKeys(td_reader("patient_first_name"));
 			driver.findElement(By.xpath(OR_reader("Object_Locator", "patient_last_name"))).sendKeys(td_reader("patient_last_name"));
-			//click("patient_dob");
-			//driver.findElement(By.xpath(OR_reader("Object_Locator", "patient_dob"))).sendKeys(td_reader("patient_dob"));
-			//driver.findElement(By.xpath(OR_reader("Object_Locator", "patient_dob_year"))).sendKeys(td_reader("patient_dob_year"));
-			//click("dob_year_ok");
+			click("patient_dob");
+			te= driver.findElement(By.xpath(OR_reader("Object_Locator", "dob_month_year"))).getText();
+			month = te.split(" ")[0].trim();
+			year = te.split(" ")[1].trim();
+			monthval=td_reader("dob_month");
+			yearval=td_reader("dob_year");
+			while(!(month.equals(monthval)&& year.equals(yearval)))
+			{
+				click("left_arrow");
+				te= driver.findElement(By.xpath(OR_reader("Object_Locator", "dob_month_year"))).getText();
+				month = te.split(" ")[0].trim();
+				year = te.split(" ")[1].trim();
+			}
+			click("dob_date");
+			click("dob_year_ok");
 			click("patient_relationship");
 			text = td_reader("patient_relationship");
 			drop_down(OR_reader("Object_Locator", "patient_relationship_list"),text);  
@@ -186,10 +218,11 @@ public class Request_second_opinion_positive_scenarios extends Generic_function 
 			click("other_agree_to_docpanel_checkbox");
 			click("iam_legal_guardian_checkbox");
 			click("proceed_button");
-			browser_wait(5);
+			Thread.sleep(8000);
+			fr= driver.findElement(By.xpath(OR_reader("Object_Locator","outer_frame")));
+			driver.switchTo().frame(fr);
 			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "upload_scans_page_title"))).isDisplayed();
 			Assert.assertEquals(true,value);
-			System.out.println("pass9");
 			browser_close();
 		}catch (Exception e) {
 			e.printStackTrace();
