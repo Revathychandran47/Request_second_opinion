@@ -48,7 +48,7 @@ public class Generic_function {
 	static List<WebElement> grid_element;
 	static WebElement ele;
 	static String ere,ptr,value;
-	public static WebElement val;
+	public static WebElement val ,element;
 
 	/* Browser launching using driver that is specified in the config.properties file , navigating to Landing Welcome Page and returning driver object*/
 	public static void Browser_Launch() throws IOException {
@@ -371,6 +371,20 @@ public class Generic_function {
 
 		}
 	}
+	 
+	/* Click the element using javascriptExecutor */
+	public static void click_javascript(String fieldname) throws IOException {
+		element= driver.findElement(By.xpath(OR_reader("Object_Locator", fieldname)));
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", element);
+	}
 }
 
 
+
+
+
+	
+	
+			
+			
